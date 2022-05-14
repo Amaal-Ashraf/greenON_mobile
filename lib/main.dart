@@ -24,7 +24,7 @@ import 'package:sqflite/sqflite.dart';
 SharedPreferences? sharedPreferences;
 void main() async{
 
-  DioHelper.init();
+  // DioHelper.init();
   runApp(MyApp());
 }
 
@@ -41,7 +41,7 @@ class MyApp extends StatelessWidget {
       // home: screenOne(),
       //home: solarScreen(),
       //home: Ports(),
-      //home: User(),
+      // home: User(),
       //home: PortState(),
       home: MyHome(),
     );

@@ -8,22 +8,23 @@ import 'package:grad/network/local/dataa.dart';
 import '../../globalVariables.dart' as gg;
 
 
+
 class DioHelper
 {
-  static var  baseURL = 'http://192.168.1.15:8000/api/';
-  static late Dio dio;
-  static init(){
-    dio = Dio(
-      BaseOptions(
-        baseUrl: 'http://192.168.1.50:8000/api/',
-        receiveDataWhenStatusError: true,
-        headers: {
-          'Accept':'application/json',
-          'Content-Type':'application/json',
-        }
-      ),
-    );
-  }
+  static var  baseURL = 'http://sbcs.epic-techs.com/api/';
+  // static late Dio dio;
+  // static init(){
+  //   dio = Dio(
+  //     BaseOptions(
+  //       baseUrl: 'http://192.168.1.50:8000/api/',
+  //       receiveDataWhenStatusError: true,
+  //       headers: {
+  //         'Accept':'application/json',
+  //         'Content-Type':'application/json',
+  //       }
+  //     ),
+  //   );
+  // }
 
 //   static Future<Response> getData({
 //     required String url,
@@ -33,13 +34,31 @@ class DioHelper
 //     return await dio.get(url, queryParameters: query,);
 //   }
 
+  static Dio dio = Dio(
+    BaseOptions(
+      baseUrl: baseURL,
+      receiveDataWhenStatusError: true,
+      validateStatus: (status) {
+        return true;
+      },
+    ),
+  );
+
   static getHttp({
     required String endPoint,
 }) async {
     try {
-      var response = await Dio().get(baseURL + endPoint);
-      var APIdata = await response.data.toString();
-      return APIdata;
+      var response = await dio.get(endPoint , options: Options(
+        headers: {
+          "Content-Type":"application/json",
+        },
+
+      ));
+
+      print(response);
+      return response.data;
+      // var APIdata = await response.data['message'].toString();
+      // return APIdata;
     } catch (e) {
       return e;
     }

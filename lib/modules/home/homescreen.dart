@@ -16,8 +16,12 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     Future fetchPanelOData() async {
-      var urll = Uri.parse('http://192.168.1.11:8000/api/test');
-      var response = await http.get(urll);
+      // var urll = Uri.parse('http://192.168.1.11:8000/api/test');
+      // var response = await http.get(urll);
+      // print(response);
+
+      var response= await DioHelper.getHttp(endPoint: 'screen/1');
+      print('Response from home widget');
       print(response);
     }
 
@@ -44,7 +48,7 @@ class _HomePageState extends State<HomePage> {
                       Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
+                          children: const [
                             Text(
                               'EAEAT',
                               style: TextStyle(
@@ -106,8 +110,8 @@ class _HomePageState extends State<HomePage> {
                   IconButton(
                     onPressed: () {
                       print('Notification button clicked');
-                      var k= DioHelper.getHttp(endPoint: 'screen/1');
-                      print('button:$k');
+                      // fetchPanelOData();
+                      // print('button:$k');
                     },
                     icon: Icon(
                       Icons.notifications_active,

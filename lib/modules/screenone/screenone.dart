@@ -18,6 +18,42 @@ class screenOne extends StatefulWidget {
 }
 
 class _screenOneState extends State<screenOne> {
+    var totalPower  = '';
+    var solarPanel = {
+      'temp':'',
+      'power':'',
+    };
+
+    var batteryOne = '';
+    var battery=0;
+
+  Future fetchPanelOData() async {
+    // var urll = Uri.parse('http://192.168.1.11:8000/api/test');
+    // var response = await http.get(urll);
+    // print(response);
+
+    var response= await DioHelper.getHttp(endPoint: 'screen/1');
+    print('Response from home widget');
+    print(response);
+    setState(() {
+      totalPower = response['power'].toString();
+      solarPanel = {
+        'temp':response['solarPanel']['temp'].toString(),
+        'power':response['solarPanel']['power'].toString(),
+      };
+      batteryOne = response['battery'].toString();
+      battery = response['battery'];
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    // Add listeners to this class
+
+    fetchPanelOData();
+
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -74,7 +110,7 @@ class _screenOneState extends State<screenOne> {
                               ),
                               Expanded(
                                 child: Text(
-                                  '51235151',
+                                  '$totalPower',
 
                                   style: TextStyle(
                                     fontSize: 34.0,
@@ -160,7 +196,7 @@ class _screenOneState extends State<screenOne> {
                                       ),
                                       Expanded(
                                         child: Text(
-                                          '12',
+                                          '${solarPanel['power']}',
                                           textAlign: TextAlign.center,
                                           style: TextStyle(
                                             fontSize: 28.0,
@@ -192,7 +228,7 @@ class _screenOneState extends State<screenOne> {
                                       ),
                                       Expanded(
                                         child: Text(
-                                          '21',
+                                          '${solarPanel['temp']}',
                                           textAlign: TextAlign.center,
                                           style: TextStyle(
                                             fontSize: 28.0,
@@ -224,7 +260,7 @@ class _screenOneState extends State<screenOne> {
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      Text('$fBatteryLevel%',
+                                      Text('$batteryOne%',
                                       style: TextStyle(
                                         fontSize: 25.0,
                                         fontWeight: FontWeight.bold,
@@ -233,7 +269,7 @@ class _screenOneState extends State<screenOne> {
                                       ),
                                       SizedBox(width: 15,),
                                       Battery(
-                                        value: fBatteryLevel,
+                                        value: battery,
                                       size: 150,),
                                     ],
                                   ),
