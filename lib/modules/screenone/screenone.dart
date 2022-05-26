@@ -1,14 +1,8 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:grad/battery.dart';
-import 'package:grad/globalVariables.dart';
-import 'package:grad/modules/home/homescreen.dart';
 import 'package:grad/network/remote/dio_helper.dart';
-import 'package:grad/solarPanels.dart';
-import 'package:http/http.dart' as http;
-import '../../globalVariables.dart' as gg;
 
 
 class screenOne extends StatefulWidget {
@@ -28,12 +22,9 @@ class _screenOneState extends State<screenOne> {
     var battery=0;
 
   Future fetchPanelOData() async {
-    // var urll = Uri.parse('http://192.168.1.11:8000/api/test');
-    // var response = await http.get(urll);
-    // print(response);
 
     var response= await DioHelper.getHttp(endPoint: 'screen/1');
-    print('Response from home widget');
+    print('Response from screen 1 widget');
     print(response);
     setState(() {
       totalPower = response['power'].toString();
@@ -110,8 +101,7 @@ class _screenOneState extends State<screenOne> {
                               ),
                               Expanded(
                                 child: Text(
-                                  '$totalPower',
-
+                                  totalPower,
                                   style: TextStyle(
                                     fontSize: 34.0,
                                     color: Color(0xFF4A87E2),

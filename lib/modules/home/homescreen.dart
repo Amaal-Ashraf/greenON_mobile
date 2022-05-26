@@ -16,11 +16,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     Future fetchPanelOData() async {
-      // var urll = Uri.parse('http://192.168.1.11:8000/api/test');
-      // var response = await http.get(urll);
-      // print(response);
-
-      var response= await DioHelper.getHttp(endPoint: 'screen/1');
+      var response = await DioHelper.getHttp(endPoint: 'screen/1');
       print('Response from home widget');
       print(response);
     }
@@ -38,12 +34,12 @@ class _HomePageState extends State<HomePage> {
                 child: Padding(
                   padding: const EdgeInsetsDirectional.only(
                     start: 35.0,
-                    top: 55.0,
+                    top: 25.0,
                     end: 35.0,
                     bottom: 0.0,
                   ),
                   child: Row(
-                    //mainAxisSize: MainAxisSize.max,
+
                     children: [
                       Expanded(
                         child: Column(
@@ -70,10 +66,17 @@ class _HomePageState extends State<HomePage> {
                           ],
                         ),
                       ),
-                      CircleAvatar(
-                        radius: 25.0,
-                        backgroundImage: AssetImage(
-                          'assets/pic/logo.png',
+                      SizedBox(width: 40,),
+                      Expanded(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Image.asset(
+                              'assets/pic/greenlogo.png',
+                              width: 100,
+                              height: 100,
+                            ),
+                          ],
                         ),
                       ),
                     ],

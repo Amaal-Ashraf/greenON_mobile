@@ -2,20 +2,48 @@
 
 import 'package:flutter/material.dart';
 import 'package:grad/battery.dart';
-import 'package:grad/modules/home/homescreen.dart';
-import 'package:grad/solarPanels.dart';
+import 'package:grad/network/remote/dio_helper.dart';
 
-class screenTwo extends StatelessWidget {
+class screenTwo extends StatefulWidget {
+  @override
+  State<screenTwo> createState() => _screenTwoState();
+}
+
+class _screenTwoState extends State<screenTwo> {
+  var totalPower = '';
+  var solarPanel = {
+    'temp': '',
+    'power': '',
+  };
+
+  var batteryTwo = '';
+  var battery = 0;
+
+  Future fetchPanelOData() async {
+    var response = await DioHelper.getHttp(endPoint: 'screen/2');
+    print('Response from screen 2 widget');
+    print(response);
+    setState(() {
+      totalPower = response['power'].toString();
+      solarPanel = {
+        'temp': response['solarPanel']['temp'].toString(),
+        'power': response['solarPanel']['power'].toString(),
+      };
+      batteryTwo = response['battery'].toString();
+      battery = response['battery'];
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    // Add listeners to this class
+
+    fetchPanelOData();
+  }
 
   @override
   Widget build(BuildContext context) {
-    var sBatteryLevel = 20;
-    var fBatteryLevel = 85;
-    var secondTemp = 19;
-    var secondPower = 110 ;
-    var firstPower = 160;
-    var totalP = secondPower + firstPower;
-
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
@@ -66,7 +94,7 @@ class screenTwo extends StatelessWidget {
                               ),
                               Expanded(
                                 child: Text(
-                                  '${totalP}',
+                                  totalPower,
                                   style: TextStyle(
                                     fontSize: 34.0,
                                     color: Color(0xFF4A87E2),
@@ -136,7 +164,9 @@ class screenTwo extends StatelessWidget {
                               Expanded(
                                 child: Container(
                                   width: double.infinity,
-                                  padding: EdgeInsets.all(10.0,),
+                                  padding: EdgeInsets.all(
+                                    10.0,
+                                  ),
                                   decoration: BoxDecoration(
                                     color: Colors.white,
                                     borderRadius: BorderRadius.circular(5.0),
@@ -151,7 +181,7 @@ class screenTwo extends StatelessWidget {
                                       ),
                                       Expanded(
                                         child: Text(
-                                          '$secondPower',
+                                          '${solarPanel['power']}',
                                           textAlign: TextAlign.center,
                                           style: TextStyle(
                                             fontSize: 28.0,
@@ -164,11 +194,15 @@ class screenTwo extends StatelessWidget {
                                   ),
                                 ),
                               ),
-                              SizedBox(width: 10,),
+                              SizedBox(
+                                width: 10,
+                              ),
                               Expanded(
                                 child: Container(
                                   width: double.infinity,
-                                  padding: EdgeInsets.all(10.0,),
+                                  padding: EdgeInsets.all(
+                                    10.0,
+                                  ),
                                   decoration: BoxDecoration(
                                     color: Colors.white,
                                     borderRadius: BorderRadius.circular(5.0),
@@ -183,7 +217,7 @@ class screenTwo extends StatelessWidget {
                                       ),
                                       Expanded(
                                         child: Text(
-                                          '$secondTemp',
+                                          '${solarPanel['temp']}',
                                           textAlign: TextAlign.center,
                                           style: TextStyle(
                                             fontSize: 28.0,
@@ -199,7 +233,9 @@ class screenTwo extends StatelessWidget {
                             ],
                           ),
                         ),
-                        SizedBox(height: 10,),
+                        SizedBox(
+                          height: 10,
+                        ),
                         Expanded(
                           //column shayl el battery container
                           child: Column(
@@ -207,7 +243,9 @@ class screenTwo extends StatelessWidget {
                               Expanded(
                                 child: Container(
                                   width: double.infinity,
-                                  padding: EdgeInsets.all(10.0,),
+                                  padding: EdgeInsets.all(
+                                    10.0,
+                                  ),
                                   decoration: BoxDecoration(
                                     color: Colors.white,
                                     borderRadius: BorderRadius.circular(5.0),
@@ -215,17 +253,21 @@ class screenTwo extends StatelessWidget {
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      Text('$sBatteryLevel%',
+                                      Text(
+                                        '$batteryTwo%',
                                         style: TextStyle(
                                           fontSize: 25.0,
                                           fontWeight: FontWeight.bold,
                                           color: Color(0xFF4A87E2),
                                         ),
                                       ),
-                                      SizedBox(width: 15,),
+                                      SizedBox(
+                                        width: 15,
+                                      ),
                                       Battery(
-                                        value: sBatteryLevel,
-                                        size: 150,),
+                                        value: battery,
+                                        size: 150,
+                                      ),
                                     ],
                                   ),
                                 ),

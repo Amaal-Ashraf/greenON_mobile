@@ -9,7 +9,7 @@ class User extends StatefulWidget {
 }
 
 class _UserState extends State<User> {
-  String userName = 'Amaal Ashraf';
+  String userName = 'User';
   double percent = 0.5;
   var remaining = 4 ;
   var totalHr = 8;

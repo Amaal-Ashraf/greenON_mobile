@@ -1,13 +1,6 @@
 import 'dart:convert';
 
 import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:grad/main.dart';
-import 'package:grad/network/local/dataa.dart';
-import '../../globalVariables.dart' as gg;
-
-
 
 class DioHelper
 {
@@ -50,12 +43,13 @@ class DioHelper
     try {
       var response = await dio.get(endPoint , options: Options(
         headers: {
+          "Accept": "application/json",
           "Content-Type":"application/json",
         },
 
       ));
 
-      print(response);
+      // print(response);
       return response.data;
       // var APIdata = await response.data['message'].toString();
       // return APIdata;
@@ -64,19 +58,19 @@ class DioHelper
     }
   }
 
-  static Future<Response> postData({
-    required String url,
-    Map<String, dynamic>? query,
-    required Map<String, dynamic> data,
-
-  }) async
-  {
-    return await dio.post(
-      url,
-      queryParameters: query,
-      data: data,
-    );
-  }
+  // static Future<Response> postData({
+  //   required String url,
+  //   Map<String, dynamic>? query,
+  //   required Map<String, dynamic> data,
+  //
+  // }) async
+  // {
+  //   return await dio.post(
+  //     url,
+  //     queryParameters: query,
+  //     data: data,
+  //   );
+  // }
 
   // static Future<Response> registerUser(Map<String, dynamic>? data) async {
   //   try {

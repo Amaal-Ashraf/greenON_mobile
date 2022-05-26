@@ -1,12 +1,91 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import 'package:grad/battery.dart';
-import 'package:grad/modules/home/homescreen.dart';
-import 'package:grad/solarPanels.dart';
+import 'package:grad/network/remote/dio_helper.dart';
 
-class PortState extends StatelessWidget {
+class PortState extends StatefulWidget {
   @override
+  State<PortState> createState() => _PortStateState();
+}
+
+class _PortStateState extends State<PortState> {
+
+  var portOne= {
+    'name':'',
+    'status':'',
+  };
+  var portTwo = {
+    'name':'',
+    'status':'',
+  };
+  var portThree = {
+    'name':'',
+    'status':'',
+  };
+
+  Future fetchPanelOData() async {
+
+    var response= await DioHelper.getHttp(endPoint: 'ports');
+    print('Response from ports widget:');
+    print(response);
+
+    setState(() {
+      portOne = {
+        'name':response['ports'][0]['name'].toString(),
+        'status':response['ports'][0]['status'].toString(),
+      };
+      portTwo = {
+        'name':response['ports'][1]['name'].toString(),
+        'status':response['ports'][1]['status'].toString(),
+      };
+      portThree = {
+        'name':response['ports'][2]['name'].toString(),
+        'status':response['ports'][2]['status'].toString(),
+      };
+    });
+
+    // bool portOneStatus ;
+    // bool portTwoStatus ;
+    // bool portThreeStatus;
+
+    if (response['ports'][0]['status'] == 'available'){
+      portOneStatus = true;
+    } else {
+      portOneStatus = false;
+    }
+
+    if (response['ports'][1]['status'] == 'available'){
+      portTwoStatus = true;
+    } else {
+      portTwoStatus = false;
+    }
+
+    if (response['ports'][2]['status'] == 'available'){
+      portThreeStatus = true;
+    } else {
+      portThreeStatus = false;
+    }
+
+
+    } //end of fetchPanelOData
+
+
+
+  @override
+  void initState() {
+    super.initState();
+    // Add listeners to this class
+
+    fetchPanelOData();
+
+  }
+
+  @override
+
+  late bool portOneStatus =false ;
+  late bool portTwoStatus =false;
+  late bool portThreeStatus=false;
+
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
@@ -101,7 +180,7 @@ class PortState extends StatelessWidget {
                               children: [
                                 Expanded(
                                   child: Text(
-                                    'DC_1',
+                                    '${portOne['name']}',
                                     style: TextStyle(
                                         color: Colors.grey[600],
                                         fontSize: 20),
@@ -113,10 +192,10 @@ class PortState extends StatelessWidget {
                                       padding: EdgeInsets.all(5),
                                       decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(5),
-                                        color: Colors.red  ,
+                                        color: (portOneStatus)? Colors.green : Colors.red,
                                       ),
                                       child: Text(
-                                        'Busy',
+                                        '${portOne['status']}',
                                         style: TextStyle(
                                             color: Colors.white,
                                             fontSize: 15),
@@ -141,7 +220,7 @@ class PortState extends StatelessWidget {
                               children: [
                                 Expanded(
                                   child: Text(
-                                    'DC_2',
+                                    '${portTwo['name']}',
                                     style: TextStyle(
                                         color: Colors.grey[600],
                                         fontSize: 20),
@@ -153,10 +232,10 @@ class PortState extends StatelessWidget {
                                       padding: EdgeInsets.all(5),
                                       decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(5),
-                                        color: Colors.green,
+                                        color: (portTwoStatus)? Colors.green : Colors.red,
                                       ),
                                       child: Text(
-                                        'Available',
+                                        '${portTwo['status']}',
                                         style: TextStyle(
                                             color: Colors.white,
                                             fontSize: 15),
@@ -181,7 +260,7 @@ class PortState extends StatelessWidget {
                               children: [
                                 Expanded(
                                   child: Text(
-                                    'DC_3',
+                                    '${portThree['name']}',
                                     style: TextStyle(
                                         color: Colors.grey[600],
                                         fontSize: 20),
@@ -193,10 +272,10 @@ class PortState extends StatelessWidget {
                                       padding: EdgeInsets.all(5),
                                       decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(5),
-                                        color: Colors.red  ,
+                                        color:(portThreeStatus)? Colors.green : Colors.red ,
                                       ),
                                       child: Text(
-                                        'Busy',
+                                        '${portThree['status']}',
                                         style: TextStyle(
                                             color: Colors.white,
                                             fontSize: 15),

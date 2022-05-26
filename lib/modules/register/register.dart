@@ -107,7 +107,7 @@ class _registerState extends State<register> {
                   child: Column(
                     children: [
                       Image.asset(
-                        'assets/pic/solar-energy.png',
+                        'assets/pic/greenlogo.png',
                         width: 150.0,
                         height: 150.0,
                         fit: BoxFit.cover,
@@ -138,25 +138,7 @@ class _registerState extends State<register> {
                   SizedBox(
                     height: 20.0,
                   ),
-                  //name
-                  TextFormField(
-                    controller: nameController,
-                    keyboardType: TextInputType.name,
-                    decoration: InputDecoration(
-                      labelText: 'Username',
-                      border: OutlineInputBorder(),
-                      prefixIcon: Icon(Icons.alternate_email),
-                    ),
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return 'username CAN NOT be empty';
-                      }
-                      return null;
-                    },
-                  ),
-                  SizedBox(
-                    height: 10.0,
-                  ),
+
                   //email
                   TextFormField(
                     controller: emailController,
@@ -197,20 +179,36 @@ class _registerState extends State<register> {
                     height: 10.0,
                   ),
                   TextFormField(
-                    controller: phoneController,
+                    controller: passwordController,
                     obscureText: true,
                     decoration: InputDecoration(
-                      labelText: 'phone number',
+                      labelText: 'Confirm Password',
                       border: OutlineInputBorder(),
-                      prefixIcon: Icon(Icons.dialpad),
+                      prefixIcon: Icon(Icons.lock),
+                      // suffixIcon: Icon(Icons.remove_red_eye),
                     ),
                     validator: (value) {
                       if (value!.isEmpty) {
-                        return 'phone CAN NOT be empty';
+                        return 'Password CAN NOT be empty';
                       }
                       return null;
                     },
                   ),
+                  // TextFormField(
+                  //   controller: phoneController,
+                  //   obscureText: true,
+                  //   decoration: InputDecoration(
+                  //     labelText: 'phone number',
+                  //     border: OutlineInputBorder(),
+                  //     prefixIcon: Icon(Icons.dialpad),
+                  //   ),
+                  //   validator: (value) {
+                  //     if (value!.isEmpty) {
+                  //       return 'phone CAN NOT be empty';
+                  //     }
+                  //     return null;
+                  //   },
+                  // ),
                   // TextFormField(
                   //   controller: passwordController,
                   //   obscureText: true,
@@ -251,12 +249,17 @@ class _registerState extends State<register> {
                       child: MaterialButton(
                         onPressed: () {
                           if (formKey.currentState!.validate()) {
-                            gradRegCubit.get(context).userReg(
-                                  name: nameController.text,
-                                  email: emailController.text,
-                                  password: passwordController.text,
-                                  phone: phoneController.text,
-                                );
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => MyHome()),
+                            );
+                            // gradRegCubit.get(context).userReg(
+                            //       name: nameController.text,
+                            //       email: emailController.text,
+                            //       password: passwordController.text,
+                            //       phone: phoneController.text,
+                            //     );
                           }
                           print('post');
                           // _reg();

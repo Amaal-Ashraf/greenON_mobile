@@ -8,7 +8,7 @@ import 'package:grad/DB_list.dart';
 import 'package:grad/modules/home/homescreen.dart';
 import 'package:grad/modules/login/login_screen.dart';
 import 'package:grad/network/remote/dio_helper.dart';
-import 'package:grad/portState.dart';
+import 'package:grad/modules/ports/portState.dart';
 import 'package:grad/ports.dart';
 import 'package:grad/modules/register/register.dart';
 import 'package:grad/modules/screenone/screenone.dart';
@@ -29,21 +29,23 @@ void main() async{
 }
 
 class MyApp extends StatelessWidget {
-
+ bool admin = false;
   @override
   Widget build(BuildContext context) {
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       //home: register(),
-      //home: LoginScreen(),
+      home: LoginScreen(),
+      //home: solarPanels(),
       //home: HomePage(),
       // home: screenOne(),
       //home: solarScreen(),
       //home: Ports(),
-      // home: User(),
+      //home: User(),
       //home: PortState(),
-      home: MyHome(),
+      //home: MyHome(),
+
     );
   }
 }
